@@ -5,8 +5,19 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Autonomous (name = "tema1")
+// CR power: din nou, salveaza-ma la OCD
+@Autonomous(name = "tema1")
 public class Test extends LinearOpMode {
+    /*
+     CR power, mini tema:
+        - fa 2 functii: una initMotors si una runMotors.
+        - ambele functii primesc ca si parametru o lista de motoare
+        - functiile nu returneaza nimic, doar configureaza motoarele
+
+        Ex: 
+            - dai initMotors(frontLeftMotor, backLeftMotor, ...) si iti reseteaza encoder-ul si seteaza target-ul
+            - dai runMotors(frontLeftMotor, ...) si iti da RUN_TO_POSITION si puterea 1
+    */
 
     @Override
     public void runOpMode() {
@@ -28,6 +39,12 @@ public class Test extends LinearOpMode {
         frontRightMotor.setTargetPosition(5000);
         backRightMotor.setTargetPosition(5000);
 
+        /*
+        CR power:
+            Ii dai drumul prea devreme. Din ce pare sa vad cred ca robotul ar pleca in INIT
+            cu full-speed, fara sa se opreasca la target pt ca inca e pe STOP_AND_RESET_ENCODER.
+            Corect ar fi sa le muti pe astea 4 dupa waitForStart si RUN_TO_POSITION.
+        */
         frontLeftMotor.setPower(1);
         backLeftMotor.setPower(1);
         frontRightMotor.setPower(1);
