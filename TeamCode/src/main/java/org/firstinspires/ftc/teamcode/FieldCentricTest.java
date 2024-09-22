@@ -48,8 +48,9 @@ public class FieldCentricTest extends LinearOpMode {
             double y = -gamepad1.left_stick_y;
 
             // CR power: ???
-            double x = gamepad1.right_stick_x;
-            double rx = gamepad1.left_stick_x; // for strafing
+            // Schimbat pentru ca asa doreste sefu
+            double x = gamepad1.left_stick_x;
+            double rx = gamepad1.right_stick_x; // for strafing
 
             if (gamepad1.options) {
                 imu.resetYaw();

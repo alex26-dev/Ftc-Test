@@ -38,6 +38,14 @@ public class Test extends LinearOpMode {
         backLeftMotor.setTargetPosition(5000);
         frontRightMotor.setTargetPosition(5000);
         backRightMotor.setTargetPosition(5000);
+        
+        waitForStart();
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
 
         /*
         CR power:
@@ -45,16 +53,11 @@ public class Test extends LinearOpMode {
             cu full-speed, fara sa se opreasca la target pt ca inca e pe STOP_AND_RESET_ENCODER.
             Corect ar fi sa le muti pe astea 4 dupa waitForStart si RUN_TO_POSITION.
         */
+
+        // (Modificat sa mearga)
         frontLeftMotor.setPower(1);
         backLeftMotor.setPower(1);
         frontRightMotor.setPower(1);
         backRightMotor.setPower(1);
-        
-        waitForStart();
-        
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 }
