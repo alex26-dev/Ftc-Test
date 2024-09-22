@@ -10,6 +10,6 @@ public class PController {
     public double calculatePower(double currentPosition, double targetPosition) {
         double error = targetPosition - currentPosition;
 
-        return error * Kp;
+        return Range.clip(error * Kp, 1, -1);
     }
 }
