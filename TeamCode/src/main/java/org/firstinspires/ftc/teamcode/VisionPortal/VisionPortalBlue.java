@@ -21,7 +21,7 @@ public class VisionPortalBlue extends OpMode {
                 .addProcessor(pipeline)
                 .build();
 
-        telemetry.addData("Status", "Visual Portal initialized");
+        telemetry.addData("Status", "Vision Portal initialized");
         telemetry.update();
     }
 
