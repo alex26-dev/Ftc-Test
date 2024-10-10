@@ -21,7 +21,6 @@ public class OtosTeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        otos = hardwareMap.get(SparkFunOTOS.class, "OTOS");
         configureOTOS();
 
         initMotors();
@@ -56,6 +55,8 @@ public class OtosTeleOp extends LinearOpMode {
     private void configureOTOS() {
         telemetry.addLine("Configuring OTOS...");
         telemetry.update();
+
+        otos = hardwareMap.get(SparkFunOTOS.class, "OTOS");
 
         // Aici se modifica unitatile de masura
         otos.setLinearUnit(DistanceUnit.CM);
