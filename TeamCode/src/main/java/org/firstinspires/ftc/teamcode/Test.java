@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 // CR power: din nou, salveaza-ma la OCD
 @Autonomous(name = "tema1")
+@Disabled
 public class Test extends LinearOpMode {
     /*
      CR power, mini tema:

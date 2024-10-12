@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 // CR power: pt OCD-ul meu te rog nu mai pune spatiu intre TeleOp si paranteza :pray: (cred ca si strica codul dar nush)
 @TeleOp(name = "Field Centric")
+@Disabled
 public class FieldCentricTest extends LinearOpMode {
 
     @Override

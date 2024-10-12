@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.OTOS;
 
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @TeleOp (name = "Otos Test")
+@Disabled
 public class OtosTeleOp extends LinearOpMode {
 
     List<DcMotorEx> motors = new ArrayList<>();

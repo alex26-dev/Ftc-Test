@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.PIDControllerAuto;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Autonomous(name = "PID Test")
+@Disabled
 public class Auto extends LinearOpMode {
 
     List<DcMotorEx> motors = new ArrayList<>();

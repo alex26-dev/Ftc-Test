@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.VisionPortal;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -7,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @TeleOp(name = "Vision Portal with Blue Detection")
+@Disabled
 public class VisionPortalBlue extends OpMode {
 
     VisionPortal visionPortal;
