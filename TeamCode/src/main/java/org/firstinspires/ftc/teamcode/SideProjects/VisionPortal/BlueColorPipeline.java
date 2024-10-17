@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.VisionPortal;
+package org.firstinspires.ftc.teamcode.SideProjects.VisionPortal;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

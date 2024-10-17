@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.VisionPortal;
+package org.firstinspires.ftc.teamcode.SideProjects.VisionPortal;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;

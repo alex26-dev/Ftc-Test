@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.OTOS;
+package org.firstinspires.ftc.teamcode.SideProjects.OTOS;
 
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;

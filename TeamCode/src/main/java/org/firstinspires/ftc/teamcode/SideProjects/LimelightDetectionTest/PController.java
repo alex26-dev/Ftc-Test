@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.PIDControllerAuto;
+package org.firstinspires.ftc.teamcode.SideProjects.LimelightDetectionTest;
 
 public class PController {
     private final double Kp;
 
-    PController(double Kp) {
+    public PController(double Kp) {
         this.Kp = Kp;
     }
 

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.LimelightDetectionTest;
+package org.firstinspires.ftc.teamcode.SideProjects.LimelightDetectionTest;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;

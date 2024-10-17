@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.LimelightDetectionTest;
+package org.firstinspires.ftc.teamcode.SideProjects.LimelightDetectionTest;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
