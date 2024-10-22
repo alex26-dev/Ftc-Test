@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.RobotSmecher.Subsystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.teamcode.RobotSmecher.Util.ColorSensor;
 
 public class IntakeSubsystem extends SubsystemBase {
 
@@ -23,13 +25,29 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public IntakeSubsystem(HardwareMap hardwareMap) {
         servo = hardwareMap.get(CRServo.class, "intakeServo");
-        sensor = hardwareMap.get(ColorSensor.class, "colorSensor");
+        sensor = new ColorSensor(hardwareMap.get(RevColorSensorV3.class, "colorSensor"));
 
         currentState = State.IDLE;
     }
 
     @Override
     public void periodic() {
+        if (currentState == State.INTAKE) {
+            switch (sensor.getSampleColor()) {
+                case YELLOW:
+                    currentState = State.IDLE;
+                    break;
+                case RED:
+                case BLUE:
+                    currentState = State.OUTTAKE;
+                    break;
+            }
+        }
+
+        if (currentState == State.OUTTAKE && sensor.getSampleColor() == null) {
+            currentState = State.IDLE;
+        }
+
         updateServo();
     }
 

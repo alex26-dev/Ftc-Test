@@ -27,11 +27,9 @@ public class TeleOp extends CommandOpMode {
         register(drive, arm, intake);
 
         driver.getGamepadButton(GamepadKeys.Button.A).whenPressed(arm::toggleArmState);
-
         driver.getGamepadButton(GamepadKeys.Button.B).whenPressed(() -> arm.changeArmState(ArmSubsystem.ArmState.LIFT));
 
         driver.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> intake.changeState(IntakeSubsystem.State.INTAKE));
-
         driver.getGamepadButton(GamepadKeys.Button.Y).whenPressed(() -> intake.changeState(IntakeSubsystem.State.OUTTAKE));
     }
 

@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.RobotSmecher.Subsystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.teamcode.RobotSmecher.Util.PDFController;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -18,12 +19,12 @@ public class ArmSubsystem extends SubsystemBase {
     public static double LOWER_ARM = 100, RAISE_ARM = 150, LIFT_ARM = 180;
 
     private final DcMotorEx armMotor;
-    private final PIDFController pidf;
+    private final PDFController pdf;
     private ArmState currentState;
 
     public ArmSubsystem(HardwareMap hardwareMap) {
         armMotor = hardwareMap.get(DcMotorEx.class, "armMotor");
-        pidf = new PIDFController(0.2, 0.3, 0.4, 0.5);
+        pdf = new PDFController(0.2, 0.4, 0.5);
 
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -54,9 +55,9 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     private void moveArm(double position) {
-        double power = Range.clip(pidf.calculate(armMotor.getCurrentPosition(), position), -0.5, 0.5);
+        double power = pdf.calculate(armMotor.getCurrentPosition(), position);
 
-        armMotor.setPower(power);
+        armMotor.setPower(Range.clip(power, -0.5, 0.5));
     }
 
     public void changeArmState(ArmState state) {
