@@ -12,22 +12,26 @@ public class ArmSubsystem extends SubsystemBase {
 
     public enum ArmState {
         LOWERED,
-        RAISED,
-        LIFT
+        EXTENDED
     }
 
-    public static double LOWER_ARM = 100, RAISE_ARM = 150, LIFT_ARM = 180;
+    public static double LOWER_ARM = 100, EXTEND_ARM = 150;
 
-    private final DcMotorEx armMotor;
+    private final DcMotorEx sliderMotorL, sliderMotorR;
     private final PDFController pdf;
     private ArmState currentState;
 
     public ArmSubsystem(HardwareMap hardwareMap) {
-        armMotor = hardwareMap.get(DcMotorEx.class, "armMotor");
+        // Daca e nevoie putem pune 2 pdf controllere cu constante diferite pentru fiecare glisiera in parte
         pdf = new PDFController(0.2, 0.4, 0.5);
 
-        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        sliderMotorL = hardwareMap.get(DcMotorEx.class, "sliderMotorL");
+        sliderMotorR = hardwareMap.get(DcMotorEx.class, "sliderMotorR");
+
+        sliderMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        sliderMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        sliderMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        sliderMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         currentState = ArmState.LOWERED;
     }
@@ -45,19 +49,18 @@ public class ArmSubsystem extends SubsystemBase {
             case LOWERED:
                 moveArm(LOWER_ARM);
                 break;
-            case RAISED:
-                moveArm(RAISE_ARM);
-                break;
-            case LIFT:
-                moveArm(LIFT_ARM);
+            case EXTENDED:
+                moveArm(EXTEND_ARM);
                 break;
         }
     }
 
     private void moveArm(double position) {
-        double power = pdf.calculate(armMotor.getCurrentPosition(), position);
+        double leftPower = pdf.calculate(sliderMotorL.getCurrentPosition(), position);
+        double rightPower = pdf.calculate(sliderMotorR.getCurrentPosition(), position);
 
-        armMotor.setPower(Range.clip(power, -0.5, 0.5));
+        sliderMotorL.setPower(Range.clip(leftPower, -0.5, 0.5));
+        sliderMotorR.setPower(Range.clip(rightPower, -0.5, 0.5));
     }
 
     public void changeArmState(ArmState state) {
@@ -66,7 +69,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     public void toggleArmState() {
         if (currentState == ArmState.LOWERED) {
-            changeArmState(ArmState.RAISED);
+            changeArmState(ArmState.EXTENDED);
         } else {
             changeArmState(ArmState.LOWERED);
         }
