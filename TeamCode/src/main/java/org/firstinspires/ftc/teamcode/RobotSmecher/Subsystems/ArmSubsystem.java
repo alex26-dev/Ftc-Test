@@ -17,61 +17,41 @@ public class ArmSubsystem extends SubsystemBase {
 
     public static double LOWER_ARM = 100, EXTEND_ARM = 150;
 
-    private final DcMotorEx sliderMotorL, sliderMotorR;
-    private final PDFController pdf;
+    private final DcMotorEx sliderMotor;
+    private final PDFController pController;
     private ArmState currentState;
 
     public ArmSubsystem(HardwareMap hardwareMap) {
-        // Daca e nevoie putem pune 2 pdf controllere cu constante diferite pentru fiecare glisiera in parte
-        pdf = new PDFController(0.2, 0.4, 0.5);
+        pController = new PDFController(0.2, 0, 0);
 
-        sliderMotorL = hardwareMap.get(DcMotorEx.class, "sliderMotorL");
-        sliderMotorR = hardwareMap.get(DcMotorEx.class, "sliderMotorR");
+        sliderMotor = hardwareMap.get(DcMotorEx.class, "sliderMotor");
 
-        sliderMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        sliderMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        sliderMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        sliderMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        sliderMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        sliderMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         currentState = ArmState.LOWERED;
     }
 
     @Override
     public void periodic() {
-        if (currentState == null)
-            return;
-
-        updateArmPos();
-    }
-
-    private void updateArmPos() {
-        switch (currentState) {
-            case LOWERED:
-                moveArm(LOWER_ARM);
-                break;
-            case EXTENDED:
-                moveArm(EXTEND_ARM);
-                break;
+        if (currentState == ArmState.LOWERED) {
+            moveArm(LOWER_ARM);
+        } else {
+            moveArm(EXTEND_ARM);
         }
     }
 
     private void moveArm(double position) {
-        double leftPower = pdf.calculate(sliderMotorL.getCurrentPosition(), position);
-        double rightPower = pdf.calculate(sliderMotorR.getCurrentPosition(), position);
+        double power = pController.calculate(sliderMotor.getCurrentPosition(), position);
 
-        sliderMotorL.setPower(Range.clip(leftPower, -0.5, 0.5));
-        sliderMotorR.setPower(Range.clip(rightPower, -0.5, 0.5));
-    }
-
-    public void changeArmState(ArmState state) {
-        currentState = state;
+        sliderMotor.setPower(Range.clip(power, -0.5, 0.5));
     }
 
     public void toggleArmState() {
         if (currentState == ArmState.LOWERED) {
-            changeArmState(ArmState.EXTENDED);
+            currentState = ArmState.EXTENDED;
         } else {
-            changeArmState(ArmState.LOWERED);
+            currentState = ArmState.LOWERED;
         }
     }
 }
