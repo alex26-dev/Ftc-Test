@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.RobotSmecher.Subsystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -16,15 +16,15 @@ public class IntakeSubsystem extends SubsystemBase {
         OUTTAKE
     }
 
-    private final double SERVO_POWER = 0.75;
+    private final double MOTOR_POWER = 0.75;
 
-    private final CRServo servo;
+    private final DcMotorEx motor;
     private final ColorSensor sensor;
     private State currentState;
 
 
     public IntakeSubsystem(HardwareMap hardwareMap) {
-        servo = hardwareMap.get(CRServo.class, "intakeServo");
+        motor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
         sensor = new ColorSensor(hardwareMap.get(RevColorSensorV3.class, "colorSensor"));
 
         currentState = State.IDLE;
@@ -35,9 +35,9 @@ public class IntakeSubsystem extends SubsystemBase {
         if (currentState == State.INTAKE) {
             switch (sensor.getSampleColor()) {
                 case YELLOW:
+                case RED:
                     currentState = State.IDLE;
                     break;
-                case RED:
                 case BLUE:
                     currentState = State.OUTTAKE;
                     break;
@@ -54,20 +54,21 @@ public class IntakeSubsystem extends SubsystemBase {
     private void updateServo() {
         switch (currentState) {
             case IDLE:
-                servo.setPower(0);
+                motor.setPower(0);
                 break;
             case INTAKE:
-                servo.setDirection(DcMotorSimple.Direction.FORWARD);
-                servo.setPower(SERVO_POWER);
+                motor.setDirection(DcMotorSimple.Direction.FORWARD);
+                motor.setPower(MOTOR_POWER);
                 break;
             case OUTTAKE:
-                servo.setDirection(DcMotorSimple.Direction.REVERSE);
-                servo.setPower(SERVO_POWER);
+                motor.setDirection(DcMotorSimple.Direction.REVERSE);
+                motor.setPower(MOTOR_POWER);
                 break;
         }
     }
 
     public void changeState(State state) {
-        currentState = state;
+        if (state == currentState) currentState = State.IDLE;
+        else currentState = state;
     }
 }

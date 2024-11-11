@@ -7,36 +7,36 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.RobotSmecher.Util.PDFController;
 
-public class HangSubsystem extends SubsystemBase {
+public class OuttakeSubsystem extends SubsystemBase {
 
-    enum HangerState {
+    enum OuttakeState {
         LOWERED,
         RAISED,
         HANGING
     }
 
-    static public double LOW_POS = 0, RAISED_POS = 150, HANG_POS = 100;
+    static public double LOW_POS = 0, RAISED_POS = 100, HANG_POS = 50;
 
     private final DcMotorEx motor;
     private final PDFController pController;
-    private HangerState currentState;
+    private OuttakeState currentState;
 
-    public HangSubsystem(HardwareMap hardwareMap) {
+    public OuttakeSubsystem(HardwareMap hardwareMap) {
         motor = hardwareMap.get(DcMotorEx.class, "hangMotor");
         pController = new PDFController(0.1, 0, 0);
 
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        currentState = HangerState.LOWERED;
+        currentState = OuttakeState.LOWERED;
     }
 
     @Override
     public void periodic() {
-        updateHangerPos();
+        updateOuttakePos();
     }
 
-    private void updateHangerPos() {
+    private void updateOuttakePos() {
         double position;
 
         switch (currentState) {
@@ -56,22 +56,22 @@ public class HangSubsystem extends SubsystemBase {
         motor.setPower(power);
     }
 
-    public void toggleHangerState() {
+    public void toggleOuttakeState() {
         switch (currentState) {
             case LOWERED:
-                currentState = HangerState.RAISED;
+                currentState = OuttakeState.RAISED;
                 break;
             case RAISED:
-                currentState = HangerState.HANGING;
+                currentState = OuttakeState.HANGING;
                 break;
             case HANGING:
                 // aici schimbam codul pentru high rung
-                currentState = HangerState.LOWERED;
+                currentState = OuttakeState.LOWERED;
                 break;
         }
     }
 
-    public void lowerHanger() {
-        currentState = HangerState.LOWERED;
+    public void lowerOuttake() {
+        currentState = OuttakeState.LOWERED;
     }
 }

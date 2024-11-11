@@ -11,7 +11,7 @@ public class ArmSubsystem extends SubsystemBase {
         EXTENDED
     }
 
-    public static double RETRACT_ARM = 100, EXTEND_ARM = 150;
+    public static double RETRACT_ARM = 0, EXTEND_ARM = 0.7;
 
     private final ServoEx leftServo, rightServo;
     private ArmState currentState;
