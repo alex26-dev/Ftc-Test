@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import java.util.function.DoubleSupplier;
 
@@ -38,5 +39,9 @@ public class DriveSubsystem extends SubsystemBase {
         this.forward = forward;
         this.strafe = strafe;
         this.rotation = rotation;
+    }
+
+    public void setPowerLimit(double powerLimit) {
+        drive.setMaxSpeed(Range.clip(powerLimit, -1, 1));
     }
 }
