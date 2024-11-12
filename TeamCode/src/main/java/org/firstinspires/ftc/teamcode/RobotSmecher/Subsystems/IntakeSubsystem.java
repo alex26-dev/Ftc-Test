@@ -20,6 +20,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     private final DcMotorEx motor;
     private final ColorSensor sensor;
+    private boolean isSampleCollected;
     private State currentState;
 
 
@@ -27,6 +28,7 @@ public class IntakeSubsystem extends SubsystemBase {
         motor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
         sensor = new ColorSensor(hardwareMap.get(RevColorSensorV3.class, "colorSensor"));
 
+        isSampleCollected = false;
         currentState = State.IDLE;
     }
 
@@ -36,15 +38,18 @@ public class IntakeSubsystem extends SubsystemBase {
             switch (sensor.getSampleColor()) {
                 case YELLOW:
                 case RED:
+                    isSampleCollected = true;
                     currentState = State.IDLE;
                     break;
                 case BLUE:
+                    isSampleCollected = false;
                     currentState = State.OUTTAKE;
                     break;
             }
         }
 
         if (currentState == State.OUTTAKE && sensor.getSampleColor() == null) {
+            isSampleCollected = false;
             currentState = State.IDLE;
         }
 
@@ -67,8 +72,12 @@ public class IntakeSubsystem extends SubsystemBase {
         }
     }
 
-    public void changeState(State state) {
-        if (state == currentState) currentState = State.IDLE;
-        else currentState = state;
+    public void toggleIntake() {
+        if (!isSampleCollected() && currentState == State.IDLE) currentState = State.INTAKE;
+        else if (isSampleCollected() && currentState == State.IDLE) currentState = State.OUTTAKE;
+    }
+
+    public boolean isSampleCollected() {
+        return isSampleCollected;
     }
 }

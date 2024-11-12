@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.RobotSmecher.Util.InterpolatedServo;
 
+import java.util.function.BooleanSupplier;
+
 public class ArmSubsystem extends SubsystemBase {
 
     public enum ArmState {
@@ -19,6 +21,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     private final InterpolatedServo leftServo, rightServo;
     private ArmState currentState;
+    private BooleanSupplier isSampleCollected;
 
     public ArmSubsystem(HardwareMap hardwareMap) {
         leftServo = new InterpolatedServo(hardwareMap.get(ServoEx.class, "armLeftServo"));
@@ -34,6 +37,10 @@ public class ArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if (isSampleCollected.getAsBoolean()) {
+            currentState = ArmState.RETRACTED;
+        }
+
         updateArmPos();
     }
 
@@ -56,5 +63,13 @@ public class ArmSubsystem extends SubsystemBase {
         } else {
             currentState = ArmState.RETRACTED;
         }
+    }
+
+    public void setBoolSupplier(BooleanSupplier supplier) {
+        isSampleCollected = supplier;
+    }
+
+    public boolean isArmRetracted() {
+        return currentState == ArmState.RETRACTED;
     }
 }
